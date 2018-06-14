@@ -13,25 +13,35 @@ var path = require('path');
 var app = express();
 var PORT = process.env.PORT || 3000;
 
+var reserv = [];
+var waitList = [];
+
 // =========
 // || APP ||
 // =========
 
-app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-add.get('/', function(req, res) {
+app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-add.get('/reservations', function(req, res) {
+app.get('/reservations', function(req, res) {
     res.sendFile(path.join(__dirname, 'reservations.html'));
 });
 
-add.get('/table', function(req, res) {
+app.get('/table', function(req, res) {
     res.sendFile(path.join(__dirname, 'table.html'));
 });
 
+app.get('/api/waitList', function(req, res) {
+    return res.json(waitList);
+});
+
+app.get('/api/reserv', function(req, res) {
+    return res.json(reserv);
+});
 
 // ==============
 // || LISTENER ||
