@@ -20,6 +20,10 @@ var waitList = [];
 // || APP ||
 // =========
 
+// ==============
+// || REQUESTS ||
+// ==============
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
@@ -41,6 +45,22 @@ app.get('/api/waitList', function(req, res) {
 
 app.get('/api/reserv', function(req, res) {
     return res.json(reserv);
+});
+
+// ==========
+// || POST ||
+// ==========
+
+app.post('/api/reserv', function(req, res) {
+    var newReserv = req.body;
+    newReserv.uniqueID = newReserv.name.replace(/\s+/g, '').toLowerCase();
+    if (reserv.length < 5) {
+        reserv.push(newReserv);
+    }
+    else {
+        waitList.push(newReserv);
+    }
+    res.json(newReserv);
 });
 
 // ==============
